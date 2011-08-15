@@ -19,9 +19,10 @@ sudo /etc/init.d/apache2 reload
 cd
 sudo bash /home/michael/utils/fix-permissions.sh /var/www/examples/ michael 
 cd /var/www/examples/
-sudo drush site-install --yes --verbose --debug --db-url=mysql://examples:examples@localhost/examples_drupal
+sudo drush site-install --yes --verbose --debug --db-url=mysql://examples:examples@localhost/examples_drupal --site-name=examples
 cd
 sudo bash /home/michael/utils/fix-permissions.sh /var/www/examples/ michael 
 sudo bash -c " echo '127.0.0.1 examples.local' >> /etc/hosts"
+cd /var/www/examples/
 drush dis overlay --yes
 
