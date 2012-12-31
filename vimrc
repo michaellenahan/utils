@@ -5,12 +5,22 @@
 " Useful vim blog posts:
 " http://stevelosh.com/blog/2010/09/coming-home-to-vim/
 
+call pathogen#infect()
+syntax on
+filetype plugin indent on
+
+if has('gui_running')
+  set background=dark
+  colorscheme solarized
+  set guioptions-=T
+endif
+
 " use jj as an alternative to <ESC>
-:inoremap jj <ESC>
+inoremap jj <ESC>
 
 " this helps us stay within 80 columns, required by coding standards
 set colorcolumn=81
-:hi ColorColumn ctermbg=black
+hi ColorColumn ctermbg=black
 
 " have vim copy/paste y/p use the system clipboard
 " http://stackoverflow.com/questions/8757395/can-vim-use-the-system-clipboards-by-default
