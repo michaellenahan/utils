@@ -32,3 +32,11 @@ set tabstop=2 " number of spaces to use for tabs
 set shiftwidth=2 " number of spaces to autoindent
 set softtabstop=2 " number of spaces for a tab
 set autoindent " set autoindenting on
+
+" line numbering
+set number
+
+" undofile tells Vim to create <FILENAME>.un~ files whenever you edit a file. 
+" These files contain undo information so you can undo previous actions even 
+" after you close and reopen a file
+set undofile
