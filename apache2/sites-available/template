@@ -1,0 +1,8 @@
+<VirtualHost *:80>
+	ServerAlias template.local
+  DocumentRoot /workspace/template
+  <Directory "/workspace/template">
+    Options FollowSymLinks
+    AllowOverride All
+  </Directory>
+</VirtualHost>
