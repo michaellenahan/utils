@@ -21,10 +21,6 @@ if has('gui_running')
   set guioptions-=T
 endif
 
-" always show status line
-" http://vim.wikia.com/wiki/Displaying_status_line_always
-set laststatus=2
-
 set hidden
 
 " allow use of mouse in terminal vim
