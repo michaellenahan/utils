@@ -15,9 +15,13 @@ call pathogen#infect()
 syntax on
 filetype plugin indent on
 
+let mapleader = ","
+nmap <leader>v :tabedit $MYVIMRC<CR>
+
 if has('gui_running')
   set background=dark
-  colorscheme solarized
+  colorscheme jellybeans
+  "colorscheme solarized
   set guioptions-=T
 endif
 
@@ -27,8 +31,12 @@ set hidden
 set mouse=a
 
 " use jk kj as an alternatives to <ESC>
-inoremap jk <ESC>
-inoremap kj <ESC>
+" commented out because now I'm using caps-lock.
+" inoremap jk <ESC>
+" inoremap jj <ESC>
+" commented out, I don't like the flicker when I type a k.
+" I can live with it for j because it's not so common.
+"inoremap kj <ESC>
 
 " this helps us stay within 80 columns, required by coding standards
 set colorcolumn=81
@@ -38,6 +46,10 @@ hi ColorColumn ctermbg=black
 " http://stackoverflow.com/questions/8757395/can-vim-use-the-system-clipboards-by-default
 set clipboard=unnamedplus
 
+" http://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+cmap w!! w !sudo tee > /dev/null %
+
 " http://vimcasts.org/episodes/tabs-and-spaces/
 set expandtab " use spaces for tabs
 set tabstop=2 " number of spaces to use for tabs
@@ -46,7 +58,12 @@ set softtabstop=2 " number of spaces for a tab
 set autoindent " set autoindenting on
 
 " line numbering
-set relativenumber
+"set relativenumber --- commented out, now I'm going to use :23 to go to a
+"line.
+set number
+" line numbering on netrw
+" http://stackoverflow.com/questions/8730702/how-do-i-configure-vimrc-so-that-line-numbers-display-in-netrw-in-vim
+let g:netrw_bufsettings = 'noma nomod rnu nobl nowrap ro'
 
 " http://vim.wikia.com/wiki/Set_working_directory_to_the_current_file
 set autochdir
@@ -55,15 +72,33 @@ set autochdir
 :set wildmenu
 
 :set incsearch
+:set ignorecase
 :set smartcase
 
-" undofile tells Vim to create <FILENAME>.un~ files whenever you edit a file. 
-" These files contain undo information so you can undo previous actions even 
+" tab navigation
+" http://vim.wikia.com/wiki/Alternative_tab_navigation
+nnoremap th  :tabfirst<CR>
+nnoremap tj  :tabnext<CR>
+nnoremap tk  :tabprev<CR>
+nnoremap tl  :tablast<CR>
+nnoremap tt  :tabedit<Space>
+nnoremap tn  :tabnext<Space>
+nnoremap tm  :tabm<Space>
+nnoremap td  :tabclose<CR>
+
+" undofile tells Vim to create <FILENAME>.un~ files whenever you edit a file.
+" These files contain undo information so you can undo previous actions even
 " after you close and reopen a file
 set undofile
 
 " set up syntastic for drupal syntax checking
 let g:syntastic_phpcs_conf="--standard=Drupal --extensions=php,module,inc,install,test,profile,theme"
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+set laststatus=2
 
 " http://stackoverflow.com/questions/4331776/change-vim-swap-backup-undo-file-name
 " Save your backups to a less annoying place than the current directory.
@@ -106,16 +141,6 @@ if exists("+undofile")
   set undofile
 endif
 
-" http://vim.wikia.com/wiki/Diff_current_buffer_and_the_original_file
-function! s:DiffWithSaved()
-  let filetype=&ft
-  diffthis
-  vnew | r # | normal! 1Gdd
-  diffthis
-  exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
-endfunction
-com! DiffSaved call s:DiffWithSaved()
-
 " http://vim.wikia.com/wiki/Highlight_unwanted_spaces
 " Commented out because it was causing this error when switching in the
 " Quickfix list:
@@ -126,3 +151,11 @@ match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 " autocmd BufWinLeave * call clearmatches()
+
+" automatically apply .vimrc
+if has("autocmd")
+  autocmd bufwritepost .vimrc source $MYVIMRC
+endif
+
+" ctrl-m to check php syntax
+:autocmd FileType php noremap <C-M> :w!<CR>:!/usr/bin/php %<CR>
