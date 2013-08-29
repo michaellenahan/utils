@@ -1,15 +1,13 @@
 <?xml version="1.0"?>
-<ruleset name="TeranexDrupal">
+<ruleset name="MyDrupalRuleset">
 <!--
-This ruleset is my personal config which I use while doing Drupal development
-with Vim. It runs automatically through the Syntastic plugin whenever a PHP
-file is saved.
-To use this ruleset, download the coder module from Drupal.org. This module
-contains a Drupal Standard for PHPCodeSniffer. Then symlink the standard to the
-standards folder like this:
-`sudo ln -s /path/to/coder/coder_sniffer/Drupal $(pear config-get php_dir)/PHP/CodeSniffer/Standards/Drupal`
+In Sublime Text User/phpcs.sublime-settings:
+  "phpcs_additional_args": {
+    "--standard": "/home/michael/utils/my-drupal-ruleset.xml",
+    "-n": ""
+  },
 -->
-  <description>Teranex Drupal coding standards</description>
+  <description>My Drupal Ruleset</description>
 
   <rule ref="Drupal">
     <exclude name="Drupal.Array.Array"/>
