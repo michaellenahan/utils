@@ -3,9 +3,8 @@
 <!--
 In Sublime Text User/phpcs.sublime-settings:
   "phpcs_additional_args": {
-    "--standard": "/home/michael/utils/my-drupal-ruleset.xml",
-    "-n": ""
   },
+... add the path to this file in the "standard" setting.
 -->
   <description>My Drupal Ruleset</description>
 
@@ -18,6 +17,5 @@ In Sublime Text User/phpcs.sublime-settings:
     <exclude name="Drupal.Commenting.InlineComment"/>
     <exclude name="Drupal.Commenting.FunctionComment"/>
     <exclude name="Squiz.Commenting.PostStatementComment" />
-    <!-- <exclude name="Generic.Files.LineLength"> -->
   </rule>
 </ruleset>
